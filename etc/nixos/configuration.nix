@@ -4,10 +4,9 @@
   imports = [
     "${modulesPath}/virtualisation/amazon-image.nix"
     ./jenkins.nix
-    ./development-tools.nix
-    ./system-tools.nix
+    ./systools.nix
+    ./devtools.nix
     ./editors.nix
-    ./shells.nix
   ];
 
   # Set time zone and keyboard layout
