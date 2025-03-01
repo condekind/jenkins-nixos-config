@@ -5,15 +5,16 @@ set -euo pipefail
 REPO_URL="https://github.com/condekind/jenkins-nixos-config.git"
 TARGET_DIR="/etc/nixos"
 TEMP_DIR="$(mktemp -d)"
+VERSION=v0.0.1
 
 echo "Bootstrapping Jenkins on NixOS configuration..."
 
 if ! command -v git &> /dev/null; then
     echo "Installing git temporarily using nix-shell..."
     echo "Cloning configuration repository..."
-    nix-shell -p git --run "git clone \"$REPO_URL\" \"$TEMP_DIR\""
+    nix-shell -p git --run "git clone --branch="$VERSION" \"$REPO_URL\" \"$TEMP_DIR\""
 else
-    git clone "$REPO_URL" "$TEMP_DIR"
+    git clone --branch="$VERSION" "$REPO_URL" "$TEMP_DIR"
 fi
 
 if [[ -f "$TARGET_DIR/configuration.nix" ]]; then
@@ -22,7 +23,7 @@ if [[ -f "$TARGET_DIR/configuration.nix" ]]; then
 fi
 
 echo "Copying configuration files to $TARGET_DIR..."
-cp "$TEMP_DIR"/*.nix "$TARGET_DIR/"
+cp "$TEMP_DIR"/etc/nixos/*.nix "$TARGET_DIR/"
 
 echo "Setting permissions..."
 chmod 644 "$TARGET_DIR"/*.nix
