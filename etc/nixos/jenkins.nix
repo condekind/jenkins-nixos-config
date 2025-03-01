@@ -1,17 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Create jenkins user
-  users.users.jenkins = {
-    isSystemUser = true;
-    description = "Jenkins automation server";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
-    # TODO(you): Add ssh keys
-    openssh.authorizedKeys.keys = [ ];
-  };
-
-  users.groups.jenkins = {};
-
   # Enable Jenkins service
   services.jenkins = {
     enable = true;
